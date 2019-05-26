@@ -1,4 +1,4 @@
-#Kmaster server pod network instalization 
+#Kmaster server pod network instalization
 sudo kubeadm init --apiserver-advertise-address=10.1.3.64 --pod-network-cidr=192.168.0.0/16
 mkdir -p $HOME/.kube
 
