@@ -15,8 +15,10 @@ kubectl create serviceaccount dashboard -n default
 kubectl create clusterrolebinding dashboard-admin -n default \
 --clusterrole=cluster-admin \
 --serviceaccount=default:dashboard
+echo " Dashboard  is creating wait for 1 min "
 sleep 1m
 kubectl get pods -o wide --all-namespaces
+echo " Service is creating wait for 1 min "
 sleep 1m
 kubectl get svc --all-namespaces
 
