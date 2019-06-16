@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jenkins-master
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jenkins-master
+    spec:
+      containers:
+       - name: jenkins-leader
+         image: bitnami/jenkins:2
+         volumeMounts:
+          - name: jenkins-home
+            mountPath: /bitnami
+          - name: docker-sock-volume
+            mountPath: /var/run/docker.sock
+         resources:
+           requests:
+             memory: "1024Mi"
+             cpu: "0.5"
+           limits: 
+             memory: "1024Mi"
+             cpu: "0.5"
+         ports:
+           - name: http-port
+             containerPort: 8080
+           - name: jnlp-port
+             containerPort: 50000
+      volumes:
+       - name: jenkins-home
+         hostPath:
+           path: /opt/jenkins_data
+       - name: docker-sock-volume
+         hostPath:
+           path: /var/run/docker.sock
+    #  nodeSelector:
+     #   server: node2
