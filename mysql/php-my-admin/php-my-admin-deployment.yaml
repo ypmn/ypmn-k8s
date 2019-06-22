@@ -1,0 +1,28 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: phpmyadmin
+spec:
+  selector:
+    matchLabels:
+      app: phpmyadmin
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin
+    spec:
+      containers:
+      - image: phpmyadmin/phpmyadmin
+        name: phpmyadmin
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secrets
+              key: root-password
+        - name: PMA_HOST
+          value: mysql
+        ports:
+        - containerPort: 80
